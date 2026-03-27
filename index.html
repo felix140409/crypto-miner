@@ -8005,6 +8005,13 @@ function introSelectLang(code) {
 }
 
 function introStart() {
+  // Plein écran
+  try {
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  } catch(e) {}
+
   const overlay = document.getElementById('intro-overlay');
   if (!overlay) return;
   // Fade out
@@ -8070,7 +8077,7 @@ window.addEventListener('DOMContentLoaded', () => {
   <ins class="adsbygoogle"
     style="display:inline-block;width:320px;height:50px"
     data-ad-client="ca-pub-4355916824484692"
-    data-ad-slot="XXXXXXXXXX"></ins>
+    data-ad-slot="7228756584"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
@@ -8124,7 +8131,7 @@ window.addEventListener('DOMContentLoaded', () => {
     <ins class="adsbygoogle"
       style="display:inline-block;width:320px;height:50px"
       data-ad-client="ca-pub-4355916824484692"
-      data-ad-slot="XXXXXXXXXX"></ins>
+      data-ad-slot="7228756584"></ins>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
 </div>
