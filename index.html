@@ -3716,7 +3716,7 @@ let renaissanceTimes=[]; // historique des temps
 let unlocked=new Set(), currentSkin=0;
 const skinsBought=new Set([0]);
 let autoPerSec=0, autoInterval=null;
-const autoLevels=new Array(10).fill(0);
+const autoLevels=new Array(30).fill(0);
 const upgLevels=new Array(50).fill(0);
 const opts={sound:true,anim:true,vibro:true};
 
@@ -3788,16 +3788,45 @@ const UPGRADES = [
 
 // 10 bots auto — donnent des BTC/sec fixes, indépendants du btcPerClick du joueur
 const AUTO_UPGRADES = [
-  {i:0, icon:'🤖', name:'Bot basique',     desc:'0.7 BTC/sec',   cost:75,       speed:0.7,  max:1},
-  {i:1, icon:'⚙',  name:'Bot rapide',     desc:'1.3 BTC/sec',   cost:450,      speed:1.3,  max:1},
-  {i:2, icon:'🔧', name:'Turbo bot',      desc:'3.3 BTC/sec',   cost:1800,     speed:3.3,  max:1},
-  {i:3, icon:'💡', name:'Smart bot',      desc:'6.7 BTC/sec',   cost:7500,     speed:6.7,  max:1},
-  {i:4, icon:'🧠', name:'IA Mineure',     desc:'13 BTC/sec',    cost:30000,    speed:13,   max:1},
-  {i:5, icon:'🤯', name:'IA Avancée',     desc:'33 BTC/sec',    cost:120000,   speed:33,   max:1},
-  {i:6, icon:'🦾', name:'Cyborg Miner',   desc:'67 BTC/sec',    cost:450000,   speed:67,   max:1},
-  {i:7, icon:'🌐', name:'Cloud Mining',   desc:'167 BTC/sec',   cost:1800000,  speed:167,  max:1},
-  {i:8, icon:'🚀', name:'IA Quantique',   desc:'333 BTC/sec',   cost:7500000,  speed:333,  max:1},
-  {i:9, icon:'🛸', name:'IA Cosmique',    desc:'667 BTC/sec',   cost:37500000, speed:667,  max:1},
+  // Tier 1
+  {i:0,  icon:'🤖', name:'Bot basique',      desc:'5 BTC/sec',       cost:300,                    speed:5,         max:999},
+  {i:1,  icon:'⚙',  name:'Bot rapide',       desc:'10 BTC/sec',      cost:2000,                   speed:10,        max:999},
+  {i:2,  icon:'🔧', name:'Turbo bot',        desc:'20 BTC/sec',      cost:10000,                  speed:20,        max:999},
+  {i:3,  icon:'💡', name:'Smart bot',        desc:'40 BTC/sec',      cost:50000,                  speed:40,        max:999},
+  // Tier 2 — IA
+  {i:4,  icon:'🧠', name:'IA Mineure',       desc:'80 BTC/sec',      cost:200000,                 speed:80,        max:999},
+  {i:5,  icon:'🤯', name:'IA Avancée',       desc:'200 BTC/sec',     cost:800000,                 speed:200,       max:999},
+  {i:6,  icon:'🦾', name:'Cyborg Miner',     desc:'450 BTC/sec',     cost:3500000,                speed:450,       max:999},
+  {i:7,  icon:'🌐', name:'Cloud Mining',     desc:'1 100 BTC/sec',   cost:15000000,               speed:1100,      max:999},
+  {i:8,  icon:'🚀', name:'IA Quantique',     desc:'2 200 BTC/sec',   cost:65000000,               speed:2200,      max:999},
+  {i:9,  icon:'🛸', name:'IA Cosmique',      desc:'4 500 BTC/sec',   cost:350000000,              speed:4500,      max:999},
+  // Tier 3 — tech avancée
+  {i:10, icon:'🧬', name:'Bot Neuronal',     desc:'7 000 BTC/sec',   cost:1500000000,             speed:7000,      max:999},
+  {i:11, icon:'🔬', name:'Nano Miner',       desc:'11 000 BTC/sec',  cost:7000000000,             speed:11000,     max:999},
+  {i:12, icon:'💠', name:'Cristal IA',       desc:'17 000 BTC/sec',  cost:35000000000,            speed:17000,     max:999},
+  // Tier 4 — espace
+  {i:13, icon:'🛸', name:'Drone Stellaire',  desc:'26 000 BTC/sec',  cost:150000000000,           speed:26000,     max:999},
+  {i:14, icon:'🌌', name:'Harvester Galact.',desc:'40 000 BTC/sec',  cost:700000000000,           speed:40000,     max:999},
+  {i:15, icon:'🪐', name:'Anneaux Saturne',  desc:'60 000 BTC/sec',  cost:3500000000000,          speed:60000,     max:999},
+  // Tier 5 — mythologie
+  {i:16, icon:'⚡', name:'Éclair de Zeus',   desc:'90 000 BTC/sec',  cost:18000000000000,         speed:90000,     max:999},
+  {i:17, icon:'🔱', name:'Trident Poséidon', desc:'135 000 BTC/sec', cost:90000000000000,         speed:135000,    max:999},
+  {i:18, icon:'🌙', name:'Œil de Ra',        desc:'200 000 BTC/sec', cost:450000000000000,        speed:200000,    max:999},
+  {i:19, icon:'🐉', name:'Dragon Cosmique',  desc:'300 000 BTC/sec', cost:2500000000000000,       speed:300000,    max:999},
+  // Tier 6 — divin
+  {i:20, icon:'🌀', name:'Vortex Éternel',   desc:'450 000 BTC/sec', cost:15000000000000000,      speed:450000,    max:999},
+  {i:21, icon:'👁',  name:'Œil Omniscient',  desc:'650 000 BTC/sec', cost:80000000000000000,      speed:650000,    max:999},
+  {i:22, icon:'🔮', name:'Cristal Divin',    desc:'950 000 BTC/sec', cost:500000000000000000,     speed:950000,    max:999},
+  // Tier 7 — cosmique extrême
+  {i:23, icon:'💫', name:'Supernova Bot',    desc:'1.4M BTC/sec',    cost:3000000000000000000,    speed:1400000,   max:999},
+  {i:24, icon:'🌠', name:'Étoile Filante',   desc:'2M BTC/sec',      cost:20000000000000000000,   speed:2000000,   max:999},
+  // Tier 8 — légendaire
+  {i:25, icon:'☯',  name:'Équilibre Univ.',  desc:'3M BTC/sec',      cost:150000000000000000000,  speed:3000000,   max:999},
+  {i:26, icon:'🧿', name:'Œil du Destin',    desc:'4.5M BTC/sec',    cost:1200000000000000000000, speed:4500000,   max:999},
+  {i:27, icon:'🌐', name:'Réseau Infini',    desc:'6.5M BTC/sec',    cost:1e22,                   speed:6500000,   max:999},
+  // Tier 9 — ultime
+  {i:28, icon:'🕳',  name:'Trou Noir Mineur',desc:'10M BTC/sec',     cost:1e23,                   speed:10000000,  max:999},
+  {i:29, icon:'♾',  name:'DIEU DU MINAGE',  desc:'20M BTC/sec',     cost:1e24,                   speed:20000000,  max:999},
 ];
 
 
@@ -4266,15 +4295,23 @@ function refreshAutoList(){
     if(!el||!ce||!le) return;
     const lv=autoLevels[u.i];
     le.textContent=lv+' / '+u.max;
-    if(lv>=u.max){el.className='upg-item maxed';ce.textContent='✓ '+(LANGS[currentLang]?.botActive||'Active');ce.className='upg-cost';}
-    else{const can=btc>=u.cost;el.className='upg-item'+(can?' can-buy':'');ce.textContent=fmtN(u.cost)+' BTC';ce.className='upg-cost'+(can?' affordable':'');}
+    const cost=autoCost(u,lv);
+    const can=btc>=cost;
+    el.className='upg-item'+(can?' can-buy':'');
+    ce.textContent=fmtN(cost)+' BTC';
+    ce.className='upg-cost'+(can?' affordable':'');
+    le.textContent='Niv. '+lv;
   });
+}
+function autoCost(u, lv) {
+  return Math.floor(u.cost * Math.pow(1.9, lv));
 }
 function buyAuto(i){
   const u=AUTO_UPGRADES[i];
-  if(autoLevels[i]>=u.max) return;
-  if(btc<u.cost) return;
-  btc-=u.cost; autoLevels[i]++; autoPerSec+=u.speed;
+  const lv=autoLevels[i];
+  const cost=autoCost(u,lv);
+  if(btc<cost) return;
+  btc-=cost; autoLevels[i]++; autoPerSec+=u.speed;
   const Lb=LANGS[currentLang]||LANGS.fr;
   const bname=(Lb.botNames&&Lb.botNames[i])||u.name;
   if(!autoInterval) startAutoTick();
@@ -7239,7 +7276,7 @@ function initRival() {
 function scheduleRivalTick() {
   clearInterval(_rivalTimer);
   _rivalTimer = setInterval(() => {
-    const targetSpeed = Math.max(0.000005, btcPerClick * autoPerSec * 0.6 + 0.00001);
+    const targetSpeed = Math.max(0.000005, autoPerSec * 0.6 + 0.00001);
     rivalSpeed += (targetSpeed - rivalSpeed) * 0.05;
     rivalBtc   += rivalSpeed * (1 + Math.random() * 0.3);
     updateRivalUI();
@@ -8172,7 +8209,6 @@ window.addEventListener('DOMContentLoaded', () => {
     <div class="menu-game-sub" id="menu-sub">MINE · AMÉLIORE · RENAISSANCE</div>
     <button class="menu-btn menu-btn-start" id="menu-start-btn" onclick="introStart()">▶ COMMENCER</button>
     <button class="menu-btn menu-btn-quit" onclick="introQuit()">✕ QUITTER</button>
-    <div class="menu-version">v4.0 — par felix1404</div>
   </div>
 </div>
 
